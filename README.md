@@ -1,6 +1,6 @@
 # AI FormFill Chrome Extension
 
-A powerful Chrome extension that helps users automatically fill forms with AI-powered field detection and smart data generation.
+A simple Chrome extension that helps users automatically fill forms with AI-powered field detection and smart data generation.
 
 ## Features
 
