@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="#4285f4"/>
+  
+  <!-- Form icon -->
+  <rect x="32" y="32" width="64" height="64" rx="8" fill="white"/>
+  <rect x="40" y="40" width="48" height="4" rx="2" fill="#4285f4"/>
+  <rect x="40" y="52" width="48" height="4" rx="2" fill="#4285f4"/>
+  <rect x="40" y="64" width="48" height="4" rx="2" fill="#4285f4"/>
+  
+  <!-- AI text -->
+  <text x="64" y="88" font-family="Arial" font-size="16" font-weight="bold" fill="#4285f4" text-anchor="middle">AI</text>
+</svg> 

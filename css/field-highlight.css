@@ -1,0 +1,188 @@
+.ai-formfill-highlight {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.ai-formfill-highlight::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ai-formfill-highlight:hover::before {
+  opacity: 1;
+}
+
+/* Field type colors */
+.ai-formfill-highlight[data-field-type="email"]::before {
+  border-color: #4285f4;
+}
+
+.ai-formfill-highlight[data-field-type="phone"]::before {
+  border-color: #34a853;
+}
+
+.ai-formfill-highlight[data-field-type="name"],
+.ai-formfill-highlight[data-field-type="first_name"],
+.ai-formfill-highlight[data-field-type="last_name"]::before {
+  border-color: #fbbc05;
+}
+
+.ai-formfill-highlight[data-field-type="address"]::before {
+  border-color: #ea4335;
+}
+
+.ai-formfill-highlight[data-field-type="password"]::before {
+  border-color: #8e24aa;
+}
+
+.ai-formfill-highlight[data-field-type="credit_card"]::before {
+  border-color: #ff6d00;
+}
+
+.ai-formfill-highlight[data-field-type="cvv"]::before {
+  border-color: #d81b60;
+}
+
+.ai-formfill-highlight[data-field-type="expiration_date"]::before {
+  border-color: #00897b;
+}
+
+.ai-formfill-highlight[data-field-type="username"]::before {
+  border-color: #00acc1;
+}
+
+.ai-formfill-highlight[data-field-type="company"]::before {
+  border-color: #7b1fa2;
+}
+
+.ai-formfill-highlight[data-field-type="url"]::before {
+  border-color: #43a047;
+}
+
+/* Validation status */
+.ai-formfill-highlight[data-valid="true"]::after {
+  content: '✓';
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #34a853;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.ai-formfill-highlight[data-valid="false"]::after {
+  content: '✗';
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ea4335;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.ai-formfill-highlight:hover::after {
+  opacity: 1;
+}
+
+/* Tooltip styles */
+.ai-formfill-tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 10001;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.ai-formfill-highlight:hover .ai-formfill-tooltip {
+  opacity: 1;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .ai-formfill-tooltip {
+    background: rgba(255, 255, 255, 0.9);
+    color: #202124;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Adjust validation icons for dark mode */
+  .ai-formfill-highlight[data-valid="true"]::after {
+    color: #4caf50;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  .ai-formfill-highlight[data-valid="false"]::after {
+    color: #ef5350;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Adjust border colors for better visibility in dark mode */
+  .ai-formfill-highlight[data-field-type="email"]::before {
+    border-color: #669df6;
+  }
+
+  .ai-formfill-highlight[data-field-type="phone"]::before {
+    border-color: #4caf50;
+  }
+
+  .ai-formfill-highlight[data-field-type="name"],
+  .ai-formfill-highlight[data-field-type="first_name"],
+  .ai-formfill-highlight[data-field-type="last_name"]::before {
+    border-color: #fdd835;
+  }
+
+  .ai-formfill-highlight[data-field-type="address"]::before {
+    border-color: #ef5350;
+  }
+
+  .ai-formfill-highlight[data-field-type="password"]::before {
+    border-color: #ab47bc;
+  }
+
+  .ai-formfill-highlight[data-field-type="credit_card"]::before {
+    border-color: #ffa726;
+  }
+
+  .ai-formfill-highlight[data-field-type="cvv"]::before {
+    border-color: #ec407a;
+  }
+
+  .ai-formfill-highlight[data-field-type="expiration_date"]::before {
+    border-color: #26a69a;
+  }
+
+  .ai-formfill-highlight[data-field-type="username"]::before {
+    border-color: #00bcd4;
+  }
+
+  .ai-formfill-highlight[data-field-type="company"]::before {
+    border-color: #8e24aa;
+  }
+
+  .ai-formfill-highlight[data-field-type="url"]::before {
+    border-color: #66bb6a;
+  }
+}

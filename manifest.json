@@ -1,0 +1,72 @@
+{
+  "manifest_version": 3,
+  "name": "AI FormFill",
+  "version": "1.0.1",
+  "description": "AI FormFill is a powerful Chrome extension that helps you fill out forms quickly and accurately.",
+  "default_locale": "en",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "32": "images/icon32.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "lib/crypto-js.min.js",
+        "lib/faker.min.js",
+        "js/content.js"
+      ],
+      "css": [
+        "css/field-highlight.css"
+      ]
+    }
+  ],
+  "options_page": "options.html",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*",
+        "css/*",
+        "lib/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "minimum_chrome_version": "88",
+  "author": "krikera",
+  "homepage_url": "https://github.com/krikera/ai-formfill",
+  "version_name": "1.0.1",
+  "short_name": "AI FormFill",
+  "offline_enabled": true,
+  "incognito": "split"
+}

@@ -1,0 +1,82 @@
+{
+  "extensionName": {
+    "message": "AI FormFill",
+    "description": "The name of the extension"
+  },
+  "extensionDescription": {
+    "message": "AI FormFill is a powerful Chrome extension that helps you fill out forms quickly and accurately using AI-powered field detection and smart data generation.",
+    "description": "Description of the extension"
+  },
+  "autoFill": {
+    "message": "Auto-fill form",
+    "description": "Label for auto-fill button"
+  },
+  "generateFakeData": {
+    "message": "Generate fake data",
+    "description": "Label for fake data generation button"
+  },
+  "generatePassword": {
+    "message": "Generate password",
+    "description": "Label for password generation button"
+  },
+  "detectFields": {
+    "message": "Detect fields",
+    "description": "Label for field detection button"
+  },
+  "darkMode": {
+    "message": "Dark mode",
+    "description": "Label for dark mode toggle"
+  },
+  "options": {
+    "message": "Options",
+    "description": "Label for options button"
+  },
+  "saveProfile": {
+    "message": "Save profile",
+    "description": "Label for profile saving button"
+  },
+  "loadProfile": {
+    "message": "Load profile",
+    "description": "Label for profile loading button"
+  },
+  "passwordLength": {
+    "message": "Password length",
+    "description": "Label for password length slider"
+  },
+  "includeUppercase": {
+    "message": "Include uppercase letters",
+    "description": "Label for uppercase letters checkbox"
+  },
+  "includeLowercase": {
+    "message": "Include lowercase letters",
+    "description": "Label for lowercase letters checkbox"
+  },
+  "includeNumbers": {
+    "message": "Include numbers",
+    "description": "Label for numbers checkbox"
+  },
+  "includeSymbols": {
+    "message": "Include symbols",
+    "description": "Label for symbols checkbox"
+  },
+  "copyToClipboard": {
+    "message": "Copy to clipboard",
+    "description": "Label for copy button"
+  },
+  "copied": {
+    "message": "Copied!",
+    "description": "Message shown when text is copied"
+  },
+  "error": {
+    "message": "Error",
+    "description": "Generic error message"
+  },
+  "success": {
+    "message": "Success",
+    "description": "Generic success message"
+  },
+  "loading": {
+    "message": "Loading...",
+    "description": "Loading message"
+  }
+}

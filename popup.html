@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>AI FormFill</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/popup.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Roboto+Mono&family=Google+Sans:wght@400;500&display=swap"
+    rel="stylesheet">
+  <script src="lib/crypto-js.min.js"></script>
+  <script src="lib/faker.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>AI FormFill</h1>
+      <label class="theme-switch" title="Toggle dark mode">
+        <input type="checkbox" id="theme-toggle">
+        <span class="theme-slider">
+          <span class="icon sun">☀️</span>
+          <span class="icon moon">🌙</span>
+        </span>
+      </label>
+    </header>
+
+    <div class="tab-container">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="autofill">Auto Fill</button>
+        <button class="tab-btn" data-tab="fakegen">Fake Data</button>
+        <button class="tab-btn" data-tab="passwords">Passwords</button>
+        <button class="tab-btn" data-tab="saved">Saved Data</button>
+      </div>
+
+      <div class="tab-content active" id="autofill">
+        <h2>Auto Fill Forms</h2>
+        <button id="fill-form" class="btn primary">Fill Current Form</button>
+        <button id="detect-fields" class="btn secondary">Detect Fields</button>
+        <div id="detected-fields" class="field-list"></div>
+      </div>
+
+      <div class="tab-content" id="fakegen">
+        <h2>Generate Fake Data</h2>
+        <div class="form-group">
+          <label for="data-type">Data Type:</label>
+          <select id="data-type" aria-label="Select data type to generate">
+            <option value="name">Full Name</option>
+            <option value="email">Email</option>
+            <option value="phone">Phone Number</option>
+            <option value="address">Address</option>
+            <option value="creditcard">Credit Card</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="data-locale">Locale:</label>
+          <select id="data-locale" aria-label="Select locale for generated data">
+            <option value="en">English (US)</option>
+            <option value="en_GB">English (UK)</option>
+            <option value="en_IN">English (India)</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+          </select>
+        </div>
+        <button id="generate-data" class="btn primary">Generate</button>
+        <div id="generated-data" class="result-box"></div>
+        <button id="copy-data" class="btn secondary">Copy</button>
+        <button id="fill-with-fake" class="btn secondary">Fill Form with This</button>
+      </div>
+
+      <div class="tab-content" id="passwords">
+        <h2>Password Generator</h2>
+
+        <div class="password-result">
+          <input type="text" id="generated-password" readonly aria-label="Generated Password">
+          <button class="btn text" id="copy-password" title="Copy to clipboard">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M16 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V20C20 20.5304 19.7893 21.0391 19.4142 21.4142C19.0391 21.7893 18.5304 22 18 22H6C5.46957 22 4.96086 21.7893 4.58579 21.4142C4.21071 21.0391 4 20.5304 4 20V6C4 5.46957 4.21071 4.96086 4.58579 4.58579C4.96086 4.21071 5.46957 4 6 4H8"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M15 2H9C8.44772 2 8 2.44772 8 3V5C8 5.55228 8.44772 6 9 6H15C15.5523 6 16 5.55228 16 5V3C16 2.44772 15.5523 2 15 2Z"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="form-group">
+          <label for="password-length">Password Length: <span id="length-value">16</span></label>
+          <input type="range" id="password-length" min="8" max="64" value="16">
+        </div>
+
+        <div class="password-options">
+          <div class="option-item">
+            <input type="checkbox" id="include-uppercase" checked>
+            <label for="include-uppercase">Uppercase (A-Z)</label>
+          </div>
+
+          <div class="option-item">
+            <input type="checkbox" id="include-lowercase" checked>
+            <label for="include-lowercase">Lowercase (a-z)</label>
+          </div>
+
+          <div class="option-item">
+            <input type="checkbox" id="include-numbers" checked>
+            <label for="include-numbers">Numbers (0-9)</label>
+          </div>
+
+          <div class="option-item">
+            <input type="checkbox" id="include-symbols" checked>
+            <label for="include-symbols">Symbols (!@#$...)</label>
+          </div>
+
+          <div class="option-item">
+            <input type="checkbox" id="exclude-similar">
+            <label for="exclude-similar">Exclude Similar (i, l, 1, o, 0)</label>
+          </div>
+
+          <div class="option-item">
+            <input type="checkbox" id="exclude-ambiguous">
+            <label for="exclude-ambiguous">Exclude Ambiguous ({}[]()<>.,~`|)</label>
+          </div>
+        </div>
+
+        <div class="password-strength">
+          <div class="strength-label">Password Strength:</div>
+          <div class="strength-meter">
+            <div class="strength-bar" id="strength-bar"></div>
+          </div>
+          <div class="strength-text" id="strength-text">Strong</div>
+        </div>
+
+        <button class="btn primary" id="generate-password">Generate Password</button>
+      </div>
+
+      <div class="tab-content" id="saved">
+        <h2>Saved Form Data</h2>
+        <div class="saved-profiles">
+          <select id="profile-select" aria-label="Select saved profile">
+            <option value="">Select a profile</option>
+          </select>
+          <button id="new-profile" class="btn secondary">New</button>
+          <button id="delete-profile" class="btn danger">Delete</button>
+        </div>
+        <div id="profile-data" class="profile-data"></div>
+        <div class="action-buttons">
+          <button id="save-profile" class="btn primary">Save</button>
+          <button id="export-data" class="btn secondary">Export</button>
+          <button id="import-data" class="btn secondary">Import</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <button id="open-options" class="btn text">Options</button>
+      <span class="version">v1.0</span>
+    </footer>
+  </div>
+
+  <script src="js/popup.js"></script>
+</body>
+
+</html>

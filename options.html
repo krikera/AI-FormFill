@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>AI FormFill Options</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Roboto+Mono&family=Google+Sans:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      /* Light Theme Variables */
+      --primary-color: #4285f4;
+      --primary-dark: #3367d6;
+      --secondary-color: #34a853;
+      --danger-color: #ea4335;
+      --bg-color: #ffffff;
+      --card-bg: #f8f9fa;
+      --text-color: #202124;
+      --text-secondary: #5f6368;
+      --border-color: #dadce0;
+      --hover-color: #f8f9fa;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="dark"] {
+      /* Dark Theme Variables */
+      --primary-color: #8ab4f8;
+      --primary-dark: #669df6;
+      --secondary-color: #81c995;
+      --danger-color: #f28b82;
+      --bg-color: #202124;
+      --card-bg: #292a2d;
+      --text-color: #e8eaed;
+      --text-secondary: #9aa0a6;
+      --border-color: #3c4043;
+      --hover-color: #28292c;
+      --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: color 0.3s ease, background-color 0.3s ease;
+    }
+
+    body {
+      font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    h1 {
+      color: var(--primary-color);
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 500;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      color: var(--text-color);
+    }
+
+    .theme-switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 24px;
+    }
+
+    .theme-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .theme-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--border-color);
+      transition: .4s;
+      border-radius: 24px;
+    }
+
+    .theme-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: var(--bg-color);
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.theme-slider {
+      background-color: var(--primary-color);
+    }
+
+    input:focus+.theme-slider {
+      box-shadow: 0 0 1px var(--primary-color);
+    }
+
+    input:checked+.theme-slider:before {
+      transform: translateX(24px);
+    }
+
+    .theme-slider .icon {
+      position: absolute;
+      top: 5px;
+      font-size: 14px;
+      color: var(--bg-color);
+    }
+
+    .theme-slider .moon {
+      right: 6px;
+      display: inline-block;
+    }
+
+    .theme-slider .sun {
+      left: 6px;
+      display: inline-block;
+    }
+
+    .option-group {
+      margin-bottom: 24px;
+      padding: 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background-color: var(--card-bg);
+      box-shadow: 0 2px 6px var(--shadow-color);
+    }
+
+    .option-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .option-label {
+      flex: 1;
+      font-weight: 500;
+    }
+
+    .option-description {
+      color: var(--text-secondary);
+      margin-top: 4px;
+      font-size: 14px;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+      font-family: 'Google Sans', 'Roboto', sans-serif;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-dark);
+      box-shadow: 0 1px 3px var(--shadow-color);
+    }
+
+    .btn.secondary {
+      background-color: var(--hover-color);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn.secondary:hover {
+      background-color: var(--card-bg);
+      box-shadow: 0 1px 3px var(--shadow-color);
+    }
+
+    .btn.danger {
+      background-color: transparent;
+      color: var(--danger-color);
+      border: 1px solid var(--danger-color);
+    }
+
+    .btn.danger:hover {
+      background-color: rgba(234, 67, 53, 0.1);
+    }
+
+    select,
+    input[type="text"],
+    input[type="number"] {
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      min-width: 200px;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Google Sans', 'Roboto', sans-serif;
+    }
+
+    select:focus,
+    input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+    }
+
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 24px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--border-color);
+      transition: .4s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: var(--bg-color);
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: var(--primary-color);
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(24px);
+    }
+
+    .footer {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .status {
+      color: var(--secondary-color);
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .status.show {
+      opacity: 1;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--card-bg);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-secondary);
+    }
+
+    /* Password Generator Settings */
+    .password-default-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+      margin-right: 8px;
+    }
+
+    .checkbox-group label {
+      margin-bottom: 0;
+      font-weight: normal;
+    }
+
+    .shortcut-options {
+      display: flex;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>AI FormFill Options</h1>
+    <label class="theme-switch" title="Toggle dark mode">
+      <input type="checkbox" id="theme-toggle">
+      <span class="theme-slider">
+        <span class="icon sun">☀️</span>
+        <span class="icon moon">🌙</span>
+      </span>
+    </label>
+  </header>
+
+  <div class="option-group">
+    <h2>General Settings</h2>
+
+    <div class="option-row">
+      <div class="option-label">
+        <label for="autoFillEnabled">Auto-Fill Enabled</label>
+        <div class="option-description">Allow the extension to automatically fill forms</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="autoFillEnabled" checked aria-label="Toggle auto-fill feature">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="option-row">
+      <div class="option-label">
+        <label for="askBeforeFill">Ask Before Filling</label>
+        <div class="option-description">Show confirmation before auto-filling forms</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="askBeforeFill" checked aria-label="Toggle confirmation before filling">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="option-row">
+      <div class="option-label">
+        <label for="showContextMenu">Show Context Menu</label>
+        <div class="option-description">Add AI FormFill options to right-click context menu</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="showContextMenu" checked aria-label="Toggle context menu visibility">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="option-row">
+      <div class="option-label">
+        <label for="defaultLocale">Default Locale</label>
+        <div class="option-description">Set default locale for fake data generation</div>
+      </div>
+      <select id="defaultLocale" aria-label="Select default locale">
+        <option value="en">English (US)</option>
+        <option value="en_GB">English (UK)</option>
+        <option value="en_IN">English (India)</option>
+        <option value="es">Spanish</option>
+        <option value="fr">French</option>
+        <option value="de">German</option>
+        <option value="it">Italian</option>
+        <option value="pt_BR">Portuguese (Brazil)</option>
+        <option value="ja">Japanese</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="option-group">
+    <h2>AI & Detection Settings</h2>
+
+    <div class="option-row">
+      <div class="option-label">
+        <label for="enableAIDetection">Enable AI Field Detection</label>
+        <div class="option-description">Use AI to intelligently detect form field types</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="enableAIDetection" checked aria-label="Toggle AI field detection">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="option-row">
+      <div class="option-label">
+        <label for="securityLevel">Security Level</label>
+        <div class="option-description">Set security level for sensitive data handling</div>
+      </div>
+      <select id="securityLevel" aria-label="Select security level">
+        <option value="high">High - Never auto-fill sensitive fields</option>
+        <option value="medium" selected>Medium - Ask for sensitive fields</option>
+        <option value="low">Low - Fill all fields</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="option-group">
+    <h2>Data Management</h2>
+
+    <div class="option-row">
+      <div class="option-label">
+        Export All Data
+        <div class="option-description">Export all saved profiles and settings</div>
+      </div>
+      <button id="exportData" class="btn secondary">Export</button>
+    </div>
+
+    <div class="option-row">
+      <div class="option-label">
+        Import Data
+        <div class="option-description">Import profiles and settings from backup</div>
+      </div>
+      <button id="importData" class="btn secondary">Import</button>
+    </div>
+
+    <div class="option-row">
+      <div class="option-label">
+        Clear All Data
+        <div class="option-description">Remove all saved profiles and reset settings</div>
+      </div>
+      <button id="clearData" class="btn danger">Clear</button>
+    </div>
+  </div>
+
+  <div class="option-group">
+    <h2>Password Generator Settings</h2>
+
+    <div class="option-row">
+      <div class="option-label">
+        <label for="default-password-length">Default Password Length</label>
+        <div class="option-description">Set the default length for generated passwords</div>
+      </div>
+      <select id="default-password-length" aria-label="Select default password length">
+        <option value="8">8 characters</option>
+        <option value="12">12 characters</option>
+        <option value="16" selected>16 characters</option>
+        <option value="24">24 characters</option>
+        <option value="32">32 characters</option>
+        <option value="64">64 characters</option>
+      </select>
+    </div>
+
+    <div class="option-row">
+      <div class="option-label">
+        <label for="password-options">Default Password Options</label>
+        <div class="option-description">Character types to include by default</div>
+      </div>
+      <div class="password-default-options">
+        <div class="checkbox-group">
+          <input type="checkbox" id="default-uppercase" checked>
+          <label for="default-uppercase">Uppercase (A-Z)</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="default-lowercase" checked>
+          <label for="default-lowercase">Lowercase (a-z)</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="default-numbers" checked>
+          <label for="default-numbers">Numbers (0-9)</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="default-symbols" checked>
+          <label for="default-symbols">Symbols (!@#$...)</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="option-row">
+      <div class="option-label">
+        <label>Password Generator Shortcuts</label>
+        <div class="option-description">Access the password generator quickly</div>
+      </div>
+      <div class="shortcut-options">
+        <div class="checkbox-group">
+          <input type="checkbox" id="password-context-menu" checked>
+          <label for="password-context-menu">Show in context menu</label>
+        </div>
+        <div class="tooltip" style="margin-left: 8px;">
+          <button class="btn secondary" style="padding: 4px 8px;">Test</button>
+          <span class="tooltiptext">Generate a sample password</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button id="saveSettings" class="btn">Save Settings</button>
+    <span id="status" class="status">Settings saved!</span>
+  </div>
+
+  <script src="js/options.js"></script>
+</body>
+
+</html>
